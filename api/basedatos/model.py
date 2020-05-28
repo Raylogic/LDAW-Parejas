@@ -15,7 +15,8 @@ Base = declarative_base()
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
 """
-class Usuario(db.Model, UserMixin):
+class Usuario(db.Model, UserMixin, Base):
+    __tablename__ = 'Usuario'
     UserID = db.Column(db.Integer, primary_key=True)
     nombre= db.Column(db.String(100), unique=True, nullable=False)
     mail= db.Column(db.String(100), unique=True, nullable=False)
@@ -24,13 +25,17 @@ class Usuario(db.Model, UserMixin):
     edad = db.Column(db.Integer, nullable=False)
     estado = db.Column(db.String(50), nullable=False)
     trabajo = db.Column(db.String(100), nullable=False)
-    eventos = db.relationship('Evento', backref='empleado', lazy =True)
+    activo = db.Column(db.Integer, default=1)
+    
+    registra = db.relationship('Evento', secondary='Registra')
+    boleto = db.relationship('Evento', secondary='Boleto')
 
     def __repr__(self):
-        return f"Usuario('{self.nombre}','{self.mail}')"
+        return '<Usuario: {}>'.format(self.Nombre)
 
 
-class Evento(db.Model):
+class Evento(db.Model, Base):
+    __tablename__ = 'Evento'
     EventID = db.Column(db.Integer, primary_key=True)
     Nombre = db.Column(db.String(50), nullable=False)
     Siglas = db.Column(db.String(10), nullable=False)
@@ -42,11 +47,16 @@ class Evento(db.Model):
     Costo = db.Column(db.Integer, nullable=False)
     Lugar = db.Column(db.String(100), nullable=False)
     imagen = db.Column(db.String(100), nullable=False, default='default.jpg')
+    activo = db.Column(db.Integer, default=1)
+
+    registra = db.relationship('Usuario', secondary='Registra')
+    boleto = db.relationship('Usuario', secondary='Boleto')
     
     def __repr__(self):
-        return f"Evento('{self.Nombre}','{self.Descripcion}','{self.Lugar}')"
+        return '<Evento: {}>'.format(self.Nombre)
 
-class Boleto(db.Model):
+class Boleto(db.Model, Base):
+    __tablename__ = 'Boleto'
     Folio = db.Column(db.Integer, primary_key=True, autoincrement=True)
     UserID = db.Column(db.Integer, db.ForeignKey('Usuario.UserID'))
     EventID = db.Column(db.Integer, db.ForeignKey('Evento.EventID'))
@@ -54,4 +64,13 @@ class Boleto(db.Model):
     imagen = db.Column(db.String(100), nullable=False, default='default.jpg')
 
     def __repr__(self):
-        return f"Evento('{self.Folio}','{self.Fecha}')"
+        return '<Boleto: {}>'.format(self.Folio)
+
+class Registra(db.Model, Base):
+    __tablename__ = 'Registra'
+    RegistroID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    UserID = db.Column(db.Integer, db.ForeignKey('Usuario.UserID'))
+    EventID = db.Column(db.Integer, db.ForeignKey('Evento.EventID'))
+
+    def __repr__(self):
+        return '<Registra: {}>'.format(self.RegistroID)
