@@ -1,4 +1,4 @@
 cd client
-set FLASK_APP=project.py
-set FLASK_ENV=development
+export FLASK_APP=project.py
+export FLASK_ENV=development
 flask run
