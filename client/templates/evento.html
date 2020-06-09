@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+    <article class="media content-event">
+        <div class="media-body">
+            <img class="center" max-width="50vw" height="auto" width="90%" src="{{ event.imagen }}">
+            <br>
+            <h2>{{ event.Nombre }}</h2>
+             
+            <div class="row">
+                <div class="column">
+                    <p class="article-content"><strong>Duracion:</strong> {{ event.duracion }}</p> 
+                    <p class="article-content"><strong>Costo:</strong> ${{ event.costo }}</p>
+                    <p class="article-content"><strong>Lugar:</strong> {{ event.lugar }}</p>
+                    <p class="article-content"><strong>Fecha:</strong> {{ event.fechahora }}</p>
+                </div>
+            </div> 
+            <p class="article-content-description">{{ event.descripcion }}</p>
+             
+            {% if event.user_id == session['user_id'] %}
+                <div>
+                    <button type="button" class="center btn btn-danger" data-toggle="modal" data-target="#deleteModal">Borrar Evento</button>
+                </div>
+            {% endif %}
+        </div>  
+    </article>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">¿Borrar Evento?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <form action="{{ url_for('borrar_evento', evento_id=event.idEvento) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

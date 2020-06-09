@@ -4,7 +4,6 @@ from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, IntegerField, DateTimeField
 from wtforms.fields.html5 import DateField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, NumberRange, URL, Regexp
-from main.models import User
 
 class RegistrationForm(FlaskForm):
     nombre = StringField('Nombre completo',
@@ -31,10 +30,10 @@ class RegistrationForm(FlaskForm):
                     Email("El mail no es válido"),
                     Length(0,100,message="El nombre de usuario no puede superar los 100 caracteres")])
     password = PasswordField('Contraseña', 
-        validators=[DataRequired(message="La contraseña es obligatoria")
-                    Regexp('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&()[]:;<>,.?/~_+-=|\]).{8,20}$',message="La contraseña debe tener 8-20 caracteres y al menos una letra minúscula, mayúscula, número y caracter especial.")])
+        validators=[DataRequired(message="La contraseña es obligatoria"),
+                    Length(8,20,message="La contraseña debe tener de 8-20 caracteres")])
     confirm_password = PasswordField('Confirmar contraseña', 
-        validators=[DataRequired(message=), 
+        validators=[DataRequired(message="La contraseña es obligatoria"), 
                     EqualTo('password',message="Las contraseñas no coinciden")])
 
     submit = SubmitField('Registrarse')
@@ -51,9 +50,9 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     email = StringField('Mail',
-        validators=[DataRequired(message=), Email()])
+        validators=[DataRequired(message="El mail es obligatorio"), Email()])
     password = PasswordField('Contraseña', 
-        validators=[DataRequired(message=)])
+        validators=[DataRequired(message="La contraseña es obligatoria")])
     remember = BooleanField('Recuérdame')
     
     submit = SubmitField('Ingresar')
@@ -97,7 +96,7 @@ class EventoForm(FlaskForm):
         validators=[DataRequired(message="La duración es obligatoria"),
                     NumberRange(1,1440,message="Inserta una duración válida")])
     asistentes = IntegerField('Numero de asistentes', 
-        validators=[DataRequired(message=),
+        validators=[DataRequired(message="El número de asistentes es obligatorio"),
                     NumberRange(1,200,message="Inserta un número de asistentes válido")])
     fechahora = DateTimeField('Fecha-Hora', 
         validators=[DataRequired(message="La fecha es obligatoria")],format='%Y-%m-%d %H:%M:%S')

@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">¡Regístrate!</legend>
+
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+                    {% if form.username.errors%}
+                    {{ form.username(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.username.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.username(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label(class="form-control-label") }}
+                {% if form.email.errors%}
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.email.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.email(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+
+            <div class="form-group">
+                {{ form.nombreCompleto.label(class="form-control-label") }}
+                {% if form.nombreCompleto.errors%}
+                    {{ form.nombreCompleto(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.nombreCompleto.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.nombreCompleto(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+
+            <div class="form-group">
+                {{ form.numTelefono.label(class="form-control-label") }}
+                {% if form.numTelefono.errors%}
+                    {{ form.numTelefono(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.numTelefono.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.numTelefono(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.edad.label(class="form-control-label") }}
+                {% if form.edad.errors%}
+                    {{ form.edad(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.edad.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.edad(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+
+            <div class="form-group">
+                {{ form.residencia.label(class="form-control-label") }}
+                {% if form.residencia.errors%}
+                    {{ form.residencia(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.residencia.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                    {%else%}
+                    {{ form.residencia(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+
+            <div class="form-group">
+                {{ form.empresa.label(class="form-control-label") }}
+                {% if form.empresa.errors%}
+                    {{ form.empresa(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.empresa.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                    {%else%}
+                    {{ form.empresa(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {% if form.password.errors%}
+                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.password.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.password(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-control-label") }}
+                {% if form.confirm_password.errors%}
+                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.confirm_password.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.confirm_password(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info")}}
+        </div>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                ¿Ya tienes una cuenta? <a class="ml-2" href="{{ url_for('login')}}">Ingresa</a>
+            </small>
+        </div>
+    </form>
+</div>
+{% endblock content %}

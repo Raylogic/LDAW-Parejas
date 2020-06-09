@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Registrar Evento</legend>
+            <div class="form-group">
+                {{ form.nombre.label(class="form-control-label") }}
+                {% if form.nombre.errors%}
+                    {{ form.nombre(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.nombre.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.nombre(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.siglas.label(class="form-control-label") }}
+                {% if form.siglas.errors%}
+                    {{ form.siglas(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.siglas.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.siglas(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.descripcion.label(class="form-control-label") }}
+                {% if form.descripcion.errors%}
+                    {{ form.descripcion(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.descripcion.errors%}
+                                <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.descripcion(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.duracion.label(class="form-control-label") }}
+                {% if form.duracion.errors%}
+                    {{ form.duracion(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.duracion.errors%}
+                                <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.duracion(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.asistentes.label(class="form-control-label") }}
+                {% if form.asistentes.errors%}
+                    {{ form.asistentes(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.asistentes.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.asistentes(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.costo.label(class="form-control-label") }}
+                {% if form.costo.errors%}
+                    {{ form.costo(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.costo.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.costo(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.lugar.label(class="form-control-label") }}
+                {% if form.lugar.errors%}
+                    {{ form.lugar(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.lugar.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.lugar(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.fecha.label(class="form-control-label") }}
+                {% if form.fecha.errors%}
+                    {{ form.fecha(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.fecha.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.fecha(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+            <div class="form-group">
+                {{ form.imagen.label(class="form-control-label") }}
+                {% if form.imagen.errors%}
+                    {{ form.imagen(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {%for error in form.imagen.errors%}
+                            <span>{{error}}</span>
+                        {%endfor%}
+                    </div>
+                {%else%}
+                    {{ form.imagen(class="form-control form-control-lg") }}
+                {%endif%}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info")}}
+        </div>
+    </form>
+</div>
+{% endblock content %}

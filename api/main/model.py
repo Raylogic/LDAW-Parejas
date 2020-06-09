@@ -4,8 +4,8 @@ from marshmallow import fields
 from flask_login import UserMixin
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+def cargar_usuario(userID):
+    return Usuario.query.get(int(userID))
 
 class Evento(db.Model):
     __tablename__ = 'Evento'
@@ -20,6 +20,7 @@ class Evento(db.Model):
     lugar = db.Column(db.String(100), nullable=False)
     imagen = db.Column(db.String(100), nullable=False, default='default.jpg')
     activo = db.Column(db.Integer, default=1)
+    userID = db.Column(db.Integer, db.ForeignKey('Usuario.userID'))
 
     registra = db.relationship('Usuario', secondary='Registra')
     boleto = db.relationship('Usuario', secondary='Boleto')
@@ -29,7 +30,7 @@ class Evento(db.Model):
 
 class EventoSchema(marsh.Schema):
     class Meta:
-        fields=('eventID','nombre','siglas','descripcion','duracion','asistentes','fechahora','costo','lugar','imagen','activo','userID')
+        fields=('eventID','nombre','siglas','descripcion','duracion','asistentes','fechahora','costo','lugar','imagen','activo')
 
 eventoSchema = EventoSchema()
 eventosSchema = EventoSchema(many=True)
@@ -39,15 +40,16 @@ eventosSchema = EventoSchema(many=True)
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'Usuario'
     userID = db.Column(db.Integer, primary_key=True)
-    username= db.Column(db.String(30), unique=True, nullable=False)
-    nombre= db.Column(db.String(150), unique=True, nullable=False)
-    mail= db.Column(db.String(100), unique=True, nullable=False)
+    username = db.Column(db.String(30), unique=True, nullable=False)
+    nombre = db.Column(db.String(150), unique=True, nullable=False)
+    mail = db.Column(db.String(100), unique=True, nullable=False)
     contrasena = db.Column(db.String(20), nullable=False)
     telefono = db.Column(db.String(10), nullable=False)
     edad = db.Column(db.Integer, nullable=False)
     estado = db.Column(db.String(50), nullable=False)
     trabajo = db.Column(db.String(100), nullable=False)
     activo = db.Column(db.Integer, default=1)
+    eventos = db.relationship('Evento', backref='empleado', lazy =True)
     
     registra = db.relationship('Evento', secondary='Registra')
     boleto = db.relationship('Evento', secondary='Boleto')
@@ -68,7 +70,7 @@ class UsuarioSchema(marsh.Schema):
     trabajo = fields.String()
     activo = fields.Integer()
     eventos = fields.Nested(EventoSchema)
-
+    
 user_schema = UsuarioSchema()
 users_schema = UsuarioSchema(many=True)
 
@@ -90,7 +92,7 @@ class BoletoSchema(marsh.Schema):
         fields = ('folio','userID','eventID','expedicion','imagen')
 
 boletoSchema = BoletoSchema()
-boletosSchema = BoletoSchema()
+boletosSchema = BoletoSchema(many=True)
 
 #-------------------------------------------------------------------------#
 
@@ -107,13 +109,7 @@ class RegistraSchema(marsh.Schema):
     class Meta:
         fields = ('registroID','userID','eventID')
 
+registraSchema = RegistraSchema()
+registrasSchema = RegistraSchema(many=True)
+
 #-------------------------------------------------------------------------#
-
-class Rol(db.Model):
-    __tablename__ = 'Rol'
-    rolID = db.Column(db.Integer, primary_key=True)
-    nombre= db.Column(db.String(100), unique=True, nullable=False)
-
-    def __repr__(self):
-        return '<Rol: {}>'.format(self.Nombre)
-
