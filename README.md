@@ -1,11 +1,11 @@
 # LDAW-Parejas
 En este repositorio se encuentra el proyecto de parejas de LDAW
 
-Terminal 1
+# Terminal 1
 1) Entra al proyecto
 2) ./API.sh
 
-Terminal 2
+# Terminal 2
 1) Entra al proyecto
 2) cd client
 3) export FLASK_APP = front.py
