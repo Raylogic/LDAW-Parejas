@@ -11,7 +11,7 @@ from datetime import datetime
 @app.route("/inicio")
 def inicio():
     events = requests.get("http://127.0.0.1:5000/events")
-    return render_template('inicio.html', events=events.json())
+    return render_template('inicio.html')
 
 @app.route("/registrarse", methods=['GET', 'POST'])
 def register():

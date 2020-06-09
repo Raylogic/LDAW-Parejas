@@ -21,44 +21,44 @@
             </div>
 
             <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
-                {% if form.email.errors%}
-                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                {{ form.mail.label(class="form-control-label") }}
+                {% if form.mail.errors%}
+                    {{ form.mail(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {%for error in form.email.errors%}
+                        {%for error in form.mail.errors%}
                             <span>{{error}}</span>
                         {%endfor%}
                     </div>
                 {%else%}
-                    {{ form.email(class="form-control form-control-lg") }}
+                    {{ form.mail(class="form-control form-control-lg") }}
                 {%endif%}
             </div>
 
             <div class="form-group">
-                {{ form.nombreCompleto.label(class="form-control-label") }}
-                {% if form.nombreCompleto.errors%}
-                    {{ form.nombreCompleto(class="form-control form-control-lg is-invalid") }}
+                {{ form.nombre.label(class="form-control-label") }}
+                {% if form.nombre.errors%}
+                    {{ form.nombre(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {%for error in form.nombreCompleto.errors%}
+                        {%for error in form.nombre.errors%}
                             <span>{{error}}</span>
                         {%endfor%}
                     </div>
                 {%else%}
-                    {{ form.nombreCompleto(class="form-control form-control-lg") }}
+                    {{ form.nombre(class="form-control form-control-lg") }}
                 {%endif%}
             </div>
 
             <div class="form-group">
-                {{ form.numTelefono.label(class="form-control-label") }}
-                {% if form.numTelefono.errors%}
-                    {{ form.numTelefono(class="form-control form-control-lg is-invalid") }}
+                {{ form.telefono.label(class="form-control-label") }}
+                {% if form.telefono.errors%}
+                    {{ form.telefono(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {%for error in form.numTelefono.errors%}
+                        {%for error in form.telefono.errors%}
                             <span>{{error}}</span>
                         {%endfor%}
                     </div>
                 {%else%}
-                    {{ form.numTelefono(class="form-control form-control-lg") }}
+                    {{ form.telefono(class="form-control form-control-lg") }}
                 {%endif%}
             </div>
             <div class="form-group">
@@ -76,49 +76,49 @@
             </div>
 
             <div class="form-group">
-                {{ form.residencia.label(class="form-control-label") }}
-                {% if form.residencia.errors%}
-                    {{ form.residencia(class="form-control form-control-lg is-invalid") }}
+                {{ form.estado.label(class="form-control-label") }}
+                {% if form.estado.errors%}
+                    {{ form.estado(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {%for error in form.residencia.errors%}
+                        {%for error in form.estado.errors%}
                             <span>{{error}}</span>
                         {%endfor%}
                     </div>
                     {%else%}
-                    {{ form.residencia(class="form-control form-control-lg") }}
+                    {{ form.estado(class="form-control form-control-lg") }}
                 {%endif%}
             </div>
 
             <div class="form-group">
-                {{ form.empresa.label(class="form-control-label") }}
-                {% if form.empresa.errors%}
-                    {{ form.empresa(class="form-control form-control-lg is-invalid") }}
+                {{ form.trabajo.label(class="form-control-label") }}
+                {% if form.trabajo.errors%}
+                    {{ form.trabajo(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {%for error in form.empresa.errors%}
+                        {%for error in form.trabajo.errors%}
                             <span>{{error}}</span>
                         {%endfor%}
                     </div>
                     {%else%}
-                    {{ form.empresa(class="form-control form-control-lg") }}
+                    {{ form.trabajo(class="form-control form-control-lg") }}
                 {%endif%}
             </div>
             <div class="form-group">
-                {{ form.password.label(class="form-control-label") }}
-                {% if form.password.errors%}
-                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                {{ form.contrasena.label(class="form-control-label") }}
+                {% if form.contrasena.errors%}
+                    {{ form.contrasena(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {%for error in form.password.errors%}
+                        {%for error in form.contrasena.errors%}
                             <span>{{error}}</span>
                         {%endfor%}
                     </div>
                 {%else%}
-                    {{ form.password(class="form-control form-control-lg") }}
+                    {{ form.contrasena(class="form-control form-control-lg") }}
                 {%endif%}
             </div>
             <div class="form-group">
                 {{ form.confirm_password.label(class="form-control-label") }}
                 {% if form.confirm_password.errors%}
-                    {{ form.email(class="form-control form-control-lg is-invalid") }}
+                    {{ form.mail(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {%for error in form.confirm_password.errors%}
                             <span>{{error}}</span>

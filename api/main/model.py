@@ -22,11 +22,10 @@ class Evento(db.Model):
     activo = db.Column(db.Integer, default=1)
     userID = db.Column(db.Integer, db.ForeignKey('Usuario.userID'))
 
-    registra = db.relationship('Usuario', secondary='Registra')
     boleto = db.relationship('Usuario', secondary='Boleto')
     
     def __repr__(self):
-        return '<Evento: {}>'.format(self.nombre)
+        return f"Evento('{self.nombre}')"
 
 class EventoSchema(marsh.Schema):
     class Meta:
@@ -35,7 +34,7 @@ class EventoSchema(marsh.Schema):
 eventoSchema = EventoSchema()
 eventosSchema = EventoSchema(many=True)
 
-#-------------------------------------------------------------------------#
+#------------------------------------------------------------------------------#
 
 class Usuario(db.Model, UserMixin):
     __tablename__ = 'Usuario'
@@ -49,14 +48,13 @@ class Usuario(db.Model, UserMixin):
     estado = db.Column(db.String(50), nullable=False)
     trabajo = db.Column(db.String(100), nullable=False)
     activo = db.Column(db.Integer, default=1)
-    eventos = db.relationship('Evento', backref='empleado', lazy =True)
+    #eventos = db.relationship('Evento', backref='empleado', lazy =True)
     
     registra = db.relationship('Evento', secondary='Registra')
     boleto = db.relationship('Evento', secondary='Boleto')
-    rol = db.relationship('Rol', secondary='Rol')
 
     def __repr__(self):
-        return '<Usuario: {}>'.format(self.username)
+        return f"Usuario('{self.username}')"
 
 class UsuarioSchema(marsh.Schema):
     userID = fields.Integer()
@@ -74,7 +72,7 @@ class UsuarioSchema(marsh.Schema):
 user_schema = UsuarioSchema()
 users_schema = UsuarioSchema(many=True)
 
-#-------------------------------------------------------------------------#
+#------------------------------------------------------------------------------#
 
 class Boleto(db.Model):
     __tablename__ = 'Boleto'
@@ -85,7 +83,7 @@ class Boleto(db.Model):
     imagen = db.Column(db.String(100), nullable=False, default='default.jpg')
 
     def __repr__(self):
-        return '<Boleto: {}>'.format(self.folio)
+        return f"Boleto('{self.folio}')"
 
 class BoletoSchema(marsh.Schema):
     class Meta:
@@ -93,23 +91,3 @@ class BoletoSchema(marsh.Schema):
 
 boletoSchema = BoletoSchema()
 boletosSchema = BoletoSchema(many=True)
-
-#-------------------------------------------------------------------------#
-
-class Registra(db.Model):
-    __tablename__ = 'Registra'
-    registroID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    userID = db.Column(db.Integer, db.ForeignKey('Usuario.userID'))
-    eventID = db.Column(db.Integer, db.ForeignKey('Evento.eventID'))
-
-    def __repr__(self):
-        return '<Registra: {}>'.format(self.registroID)
-
-class RegistraSchema(marsh.Schema):
-    class Meta:
-        fields = ('registroID','userID','eventID')
-
-registraSchema = RegistraSchema()
-registrasSchema = RegistraSchema(many=True)
-
-#-------------------------------------------------------------------------#

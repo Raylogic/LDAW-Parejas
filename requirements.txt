@@ -10,8 +10,6 @@ cffi==1.14.0
 chardet==3.0.4
 click==7.1.1
 distlib==0.3.0
-Django==3.0.3
-django-crispy-forms==1.9.0
 filelock==3.0.12
 Flask==1.1.1
 Flask-Bcrypt==0.7.1
@@ -35,8 +33,10 @@ marshmallow==3.5.2
 marshmallow-sqlalchemy==0.23.0
 mccabe==0.6.1
 more-itertools==8.2.0
+mysql-connector-python==8.0.20
 packaging==20.3
 pluggy==0.13.1
+protobuf==3.12.1
 py==1.8.1
 pycparser==2.20
 PyJWT==1.7.1

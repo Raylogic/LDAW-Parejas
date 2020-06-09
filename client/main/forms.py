@@ -9,7 +9,7 @@ class RegistrationForm(FlaskForm):
     nombre = StringField('Nombre completo',
         validators=[DataRequired(message="El estado es obligatorio"), 
                     Length(0,150,message="El nombre no puede superar los 150 caracteres")])
-    telefono = IntegerField('Teléfono',
+    telefono = StringField('Teléfono',
         validators=[DataRequired(message="El teléfono es obligatorio"), 
                     Length(10,10,message="El número de teléfono debe ser de 10 dígitos")])
     edad = IntegerField('Edad', 
@@ -25,33 +25,22 @@ class RegistrationForm(FlaskForm):
     username = StringField('Usuario', 
         validators=[DataRequired(message="El nombre de usuario es obligatorio"), 
                     Length(0,30,message="El nombre de usuario no puede superar los 30 caracteres")])
-    email = StringField('Correo',
+    mail = StringField('Correo',
         validators=[DataRequired(message="El mail es obligatorio"), 
                     Email("El mail no es válido"),
                     Length(0,100,message="El nombre de usuario no puede superar los 100 caracteres")])
-    password = PasswordField('Contraseña', 
-        validators=[DataRequired(message="La contraseña es obligatoria"),
-                    Length(8,20,message="La contraseña debe tener de 8-20 caracteres")])
+    contrasena = PasswordField('Contraseña', 
+        validators=[DataRequired(message="La contraseña es obligatoria")])
     confirm_password = PasswordField('Confirmar contraseña', 
         validators=[DataRequired(message="La contraseña es obligatoria"), 
-                    EqualTo('password',message="Las contraseñas no coinciden")])
+                    EqualTo('contrasena',message="Las contraseñas no coinciden")])
 
     submit = SubmitField('Registrarse')
 
-    def validate_username(self, username):
-        user = User.query.filter_by(username=username.data).first()
-        if user:
-            raise ValidationError('Ya existe una cuenta con ese nombre de usuario. Intenta con otro')
-    
-    def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user:
-            raise ValidationError('Ya existe una cuenta con ese correo. Intenta con otro')
-
 class LoginForm(FlaskForm):
-    email = StringField('Mail',
+    mail = StringField('Mail',
         validators=[DataRequired(message="El mail es obligatorio"), Email()])
-    password = PasswordField('Contraseña', 
+    contrasena = PasswordField('Contraseña', 
         validators=[DataRequired(message="La contraseña es obligatoria")])
     remember = BooleanField('Recuérdame')
     

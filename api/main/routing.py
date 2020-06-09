@@ -24,7 +24,7 @@ def all_events():
 @app.route("/registrarse", methods=['POST'])
 def register():
     username = request.json['username']
-    nombre = request.json['nombres']
+    nombre = request.json['nombre']
     mail = request.json['mail']
     contrasena = request.json['contrasena']
     hashed_password = bcrypt.generate_password_hash(contrasena).decode('utf-8')
@@ -41,7 +41,8 @@ def register():
         telefono=telefono, 
         edad=edad, 
         estado=estado, 
-        trabajo=trabajo
+        trabajo=trabajo,
+        activo=1,
     )
     db.session.add(user)
     db.session.commit()
