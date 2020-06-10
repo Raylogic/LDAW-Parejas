@@ -19,7 +19,7 @@
               </div> 
               <p class="article-content-description">{{ event.Decripcion }}</p>
              
-              {% if event.user_id == session['user_id'] %}
+              {% if event.empleado == current_user %}
               <div>
                 <button type="button" class="center btn btn-danger  " data-toggle="modal" data-target="#deleteModal">Borrar Evento</button>
               </div>

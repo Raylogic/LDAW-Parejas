@@ -7,31 +7,32 @@
                 <legend class="border-bottom mb-4">Log In</legend>
                
                 <div class="form-group">
-                    {{ form.mail.label(class="form-control-label") }}
+                        {{ form.email.label(class="form-control-label") }}
 
-                    {% if form.mail.errors%}
-                        {{ form.mail(class="form-control form-control-lg is-invalid") }}
+                        {% if form.email.errors%}
+                         {{ form.email(class="form-control form-control-lg is-invalid") }}
+                         <div class="invalid-feedback">
+                             {%for error in form.email.errors%}
+                                <span>{{error}}</span>
+                             {%endfor%}
+                         </div>
+                         {%else%}
+                         {{ form.email(class="form-control form-control-lg") }}
+                        {%endif%}
+
+                </div>
+                <div class="form-group">
+                        {{ form.password.label(class="form-control-label") }}
+                        {% if form.password.errors%}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            {%for error in form.mail.errors%}
-                            <span>{{error}}</span>
+                            {%for error in form.password.errors%}
+                               <span>{{error}}</span>
                             {%endfor%}
                         </div>
                         {%else%}
-                        {{ form.mail(class="form-control form-control-lg") }}
-                    {%endif%}
-                </div>
-                <div class="form-group">
-                    {{ form.contrasena.label(class="form-control-label") }}
-                    {% if form.contrasena.errors%}
-                        {{ form.contrasena(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {%for error in form.contrasena.errors%}
-                                <span>{{error}}</span>
-                            {%endfor%}
-                        </div>
-                    {%else%}
-                        {{ form.contrasena(class="form-control form-control-lg") }}
-                    {%endif%}
+                        {{ form.password(class="form-control form-control-lg") }}
+                       {%endif%}
                 </div>
                 <div class="form-check">
                     {{ form.remember(class="form-check-input")}}

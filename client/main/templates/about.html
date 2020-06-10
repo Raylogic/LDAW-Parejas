@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block content %}
+{% for ticket in tickets %}
+  {% for event in events %}
+    {% if event.idEvento == ticket.idEvento %} 
+      <article class="media content-event">
+
+     
+        <form action="">
+            <div class="media-body">
+              <img class="center" max-width="50vw" height="auto" width="90%" src="{{ event.imagen }}">
+              <br>
+            <h2>¡Iras a {{ event.Nombre }}!</h2>             
+            <div class="row">
+
+              <div class="column">
+                  <p class="article-content"><strong>Lugar:</strong> {{ event.Lugar }}</p>
+              </div>
+              <div class="column">
+                <p class="article-content"><strong>Fecha del Evento:</strong> {{ event.Fecha}}</p>
+              </div>
+            </div> 
+            
+              <div class="row">
+                  <div class="column">
+                      <p class="article-content"><strong>Folio:</strong> {{ ticket.folio }}</p>
+                  </div>
+                  <div class="column">
+                      <p class="article-content"><strong>Siglas:</strong> {{ event.Siglas }}</p>
+                      <p class="article-content"><strong>Cantidad:</strong> {{ ticket.cantidad }}</p>
+                  </div>
+              </div>
+             
+              <img  class="center" max-width="10vw" height="auto" width="10%" src="data:image/png;base64,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">
+              <br>
+           
+          
+            <button type="submit" class="center btn btn-primary"  >Descargar Boletos</button>
+            </div>
+        </form>
+     
+      </article>
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% endblock content %}
+

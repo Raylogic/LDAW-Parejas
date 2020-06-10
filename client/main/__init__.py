@@ -9,6 +9,10 @@ from flask_bcrypt import Bcrypt
 from flask import session
 
 app = Flask(__name__)
-app.secret_key = "LDAW"
 
-from main import routing
+app.secret_key = "hello"
+
+
+
+from main import routes
+
