@@ -2,9 +2,8 @@ import os
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify,session
 import requests,json
 from main import app
-from main.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, EventoForm, BoletoForm
+from main.forms import RegistrationForm, LoginForm, UpdateAccountForm, EventoForm, BoletoForm
 from datetime import datetime
-
 
 @app.route("/")
 @app.route("/home")
@@ -14,20 +13,20 @@ def home():
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
-    if "email" in session:
+    if "mail" in session:
         return redirect(url_for('home'))
 
     form = RegistrationForm()
     if form.validate_on_submit():
         post_data = {
         'username': form.username.data,
-        'email':form.email.data,
+        'mail':form.mail.data,
         'password':form.password.data,
-        'nombreCompleto':form.nombreCompleto.data,
-        'numTelefono':form.numTelefono.data,
+        'nombre':form.nombre.data,
+        'telefono':form.telefono.data,
         'edad':form.edad.data,
-        'residencia':form.residencia.data,
-        'empresa':form.empresa.data,
+        'estado':form.estado.data,
+        'trabajo':form.trabajo.data,
         }
         response = requests.post("http://127.0.0.1:5000/register",json=post_data)
         if response.status_code == 200:
@@ -40,14 +39,14 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         post_data = {
-            'email':form.email.data,
+            'mail':form.mail.data,
             'password':form.password.data
         }
         response = requests.post("http://127.0.0.1:5000/login",json=post_data)
         
         if response.status_code == 200:
          
-            session['email'] = response.json()['email']
+            session['mail'] = response.json()['mail']
             session['user_id'] = response.json()['id']
             session['username'] = response.json()['username']
             session['logged_in'] = True
@@ -55,7 +54,7 @@ def login():
 
             return redirect(url_for('home'))
         else:
-            flash('Login Unsuccessful. Please check email and password', 'danger')
+            flash('Login Unsuccessful. Please check mail and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 
@@ -81,7 +80,7 @@ def save_picture(form_picture):
 
 @app.route("/account", methods=['GET', 'POST'])
 def account():
-    if "email" in session:
+    if "mail" in session:
         
         form = UpdateAccountForm()
         if form.validate_on_submit():
@@ -91,18 +90,18 @@ def account():
 
             post_data={
                 'username': form.username.data,
-                'email': form.email.data,
+                'mail': form.mail.data,
                 'user_id':session['user_id']
             }
             response = requests.post("http://127.0.0.1:5000/account",json=post_data)
             if response.status_code==200:
-                session['email'] = response.json()['email']
+                session['mail'] = response.json()['mail']
                 session['username'] = response.json()['username']
                 flash('Your account has been updated!', 'success')
                 return redirect(url_for('account'))
         elif request.method == 'GET':
             form.username.data = session['username']
-            form.email.data = session['email']
+            form.mail.data = session['mail']
         image_file = url_for('static', filename='profile_pics/default.jpg')
         return render_template('account.html', title='Account',
                             image_file=image_file, form=form)
@@ -111,7 +110,7 @@ def account():
 
 @app.route('/evento/registar', methods=['GET', 'POST'])
 def new_event():
-    if "email" in session:
+    if "mail" in session:
         form = EventoForm()
         if form.validate_on_submit():
             post_data = {
@@ -142,7 +141,7 @@ def evento(evento_id):
 
 @app.route('/evento/comprar/<int:evento_id>', methods=['GET', 'POST'])
 def comprar_evento(evento_id):
-    if "email" in session:
+    if "mail" in session:
         form = BoletoForm()
         if form.validate_on_submit():
             post_data={
@@ -161,7 +160,7 @@ def comprar_evento(evento_id):
 
 @app.route("/Boletos")
 def about():
-    if 'email' in session:
+    if 'mail' in session:
         post_data={
             'user_id':session['user_id']
         }
@@ -174,7 +173,7 @@ def about():
  
 @app.route("/evento/<int:evento_id>/borrar", methods=['POST'])
 def borrar_evento(evento_id):
-    if "email" in session:
+    if "mail" in session:
         post_data={
             'user_id': session['user_id']
         }
@@ -184,17 +183,3 @@ def borrar_evento(evento_id):
             return redirect(url_for('home'))
     else:
         return redirect(url_for('login'))
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,32 +8,22 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 
 class RegistrationForm(FlaskForm):
     username = StringField('Usuario', 
-                            validators=[DataRequired(), Length(min=2,max=20)])
-    email = StringField('Correo',
+        validators=[DataRequired(), Length(min=2,max=20)])
+    mail = StringField('Correo',
                             validators=[DataRequired(), Email()])
-    nombreCompleto = StringField('Nombre Completo',validators=[DataRequired()] )
-    numTelefono = StringField('Telefono',validators=[DataRequired(), Regexp('\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}',message="Ingresa un telefono válido")])
+    nombre = StringField('Nombre Completo',validators=[DataRequired()] )
+    telefono = StringField('Telefono',validators=[DataRequired(), Regexp('\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}',message="Ingresa un telefono válido")])
     edad = IntegerField('Edad', validators=[DataRequired()])
-    residencia = StringField('Lugar de Residencia',validators=[DataRequired()] )
-    empresa = StringField('Empresa', validators=[DataRequired()])
+    estado = StringField('Lugar de estado',validators=[DataRequired()] )
+    trabajo = StringField('Empresa', validators=[DataRequired()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     confirm_password = PasswordField('Confirmar Contraseña', 
                             validators=[DataRequired(), EqualTo('password')])
     
     submit = SubmitField('Registrarse')
 
-    # def validate_username(self, username):
-    #     user = User.query.filter_by(username=username.data).first()
-    #     if user:
-    #         raise ValidationError('Ya existe una cuenta con ese nombre de usuario. Intenta con otro')
-    
-    # def validate_email(self, email):
-    #     user = User.query.filter_by(email=email.data).first()
-    #     if user:
-    #         raise ValidationError('Ya existe una cuenta con ese correo. Intenta con otro')
-
 class LoginForm(FlaskForm):
-    email = StringField('Correo Electronico',
+    mail = StringField('Correo Electronico',
                             validators=[DataRequired(), Email()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     remember = BooleanField('Recuerdame')
@@ -43,29 +33,12 @@ class LoginForm(FlaskForm):
 class UpdateAccountForm(FlaskForm):
     username = StringField('Usuario', 
                             validators=[DataRequired(), Length(min=2,max=20)])
-    email = StringField('Correo Electronico',
+    mail = StringField('Correo Electronico',
                             validators=[DataRequired(), Email()])
 
     picture = FileField('Actualizar Foto de Perfil', validators=[FileAllowed(['jpg', 'png'])])
 
     submit = SubmitField('Actualizar')
-
-    # def validate_username(self, username):
-    #     if username.data != current_user.username:
-    #         user = User.query.filter_by(username=username.data).first()
-    #         if user:
-    #             raise ValidationError('Ya existe una cuenta con ese nombre de usuario. Intenta con otro')
-    
-    # def validate_email(self, email):
-    #     if email.data != current_user.email:
-    #         user = User.query.filter_by(email=email.data).first()
-    #         if user:
-    #             raise ValidationError('Ya existe una cuenta con ese correo. Intenta con otro')
-
-class PostForm(FlaskForm):
-    title= StringField('Nombre', validators=[DataRequired()])
-    content = TextAreaField('Descripcion', validators=[DataRequired()])
-    submit = SubmitField('Registrar Evento')
 
 class EventoForm(FlaskForm):
     nombre= StringField('Nombre del evento', validators=[DataRequired()])

@@ -8,7 +8,7 @@ from datetime import datetime
 
 @app.route('/user', methods=['GET'])
 def get_all_users():
-    users = User.query.all()
+    users = Usuario.query.all()
     result = users_schema.dump(users)
     return jsonify(result)
 
@@ -22,17 +22,17 @@ def get_all_events():
 @app.route("/register", methods=['POST'])
 def register():
     username = request.json['username']
-    email = request.json['email']
+    mail = request.json['mail']
     password = request.json['password']
-    nombreCompleto = request.json['nombreCompleto']
-    numTelefono = request.json['numTelefono']
+    nombre = request.json['nombre']
+    telefono = request.json['telefono']
     edad = request.json['edad']
-    residencia = request.json['residencia']
-    empresa = request.json['empresa']
+    estado = request.json['estado']
+    trabajo = request.json['trabajo']
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
     
-    user = User(username=username, email=email,password=hashed_password, nombreCompleto=nombreCompleto, numTelefono=numTelefono, edad=edad, residencia=residencia, empresa=empresa)
+    user = Usuario(username=username, mail=mail,password=hashed_password, nombre=nombre, telefono=telefono, edad=edad, estado=estado, trabajo=trabajo)
     db.session.add(user)
     db.session.commit()
        
@@ -43,7 +43,7 @@ def new_event():
 
     Nombre = request.json['Nombre']
     Siglas = request.json['Siglas']
-    Decripcion = request.json['Descripcion']
+    Descripcion = request.json['Descripcion']
     Duracion = request.json['Duracion']
     Cupo = request.json['Cupo']
     Costo = request.json['Costo']
@@ -55,7 +55,7 @@ def new_event():
     format = '%Y-%m-%d' 
     datetime_str = datetime.strptime(Fecha, format) 
     
-    event = Evento(Nombre=Nombre, Siglas=Siglas, Decripcion=Decripcion, Duracion=Duracion, Cupo=Cupo, Costo=Costo, Lugar=Lugar, Fecha=datetime_str, imagen=imagen, user_id=user_id)
+    event = Evento(Nombre=Nombre, Siglas=Siglas, Descripcion=Descripcion, Duracion=Duracion, Cupo=Cupo, Costo=Costo, Lugar=Lugar, Fecha=datetime_str, imagen=imagen, user_id=user_id)
     db.session.add(event)
     db.session.commit()
 
@@ -99,7 +99,7 @@ def borrar_evento(evento_id):
     evento = Evento.query.get_or_404(evento_id)
 
     user_id = request.json['user_id']
-    user = User.query.get_or_404(user_id)
+    user = Usuario.query.get_or_404(user_id)
 
     if evento.user_id != user.id:
         abort(403)
@@ -111,50 +111,38 @@ def borrar_evento(evento_id):
 @app.route("/login", methods=['POST'])
 def login():
 
-    email = request.json['email']
+    mail = request.json['mail']
     password = request.json['password']
 
-    user = User.query.filter_by(email=email).first()
+    user = Usuario.query.filter_by(mail=mail).first()
 
     if user and bcrypt.check_password_hash(user.password,password):
 
         return {
-                'message': 'Successful logged in','email':str(email), 'id':int(user.id), 'username':str(user.username)
+                'message': 'Successful logged in','mail':str(mail), 'id':int(user.id), 'username':str(user.username)
             }, 200
 
     
 @app.route("/account", methods=['POST'])
 def account():
     username = request.json['username']
-    email = request.json['email']
+    mail = request.json['mail']
     user_id = request.json['user_id']
   
-    user = User.query.get_or_404(user_id)
+    user = Usuario.query.get_or_404(user_id)
     user.username = username
-    user.email = email
+    user.mail = mail
     db.session.commit()
 
     return {
-                'message': 'Successful updated','email':str(email), 'username':str(user.username)
+                'message': 'Successful updated','mail':str(mail), 'username':str(user.username)
             }, 200
 
     
 @app.route('/user/delete', methods=['GET', 'POST'])
 def borrar_usuario():
-    User.query.filter_by(id=2).delete()
+    Usuario.query.filter_by(id=2).delete()
     db.session.commit()
     flash('Cuenta borrada exitosamente', 'success')
     return redirect(url_for('home'))
-
-
-
-
-
-
-
-
-
-
-
-
 
