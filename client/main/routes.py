@@ -21,7 +21,7 @@ def register():
         post_data = {
         'username': form.username.data,
         'mail':form.mail.data,
-        'password':form.password.data,
+        'contrasena':form.contrasena.data,
         'nombre':form.nombre.data,
         'telefono':form.telefono.data,
         'edad':form.edad.data,
@@ -40,28 +40,25 @@ def login():
     if form.validate_on_submit():
         post_data = {
             'mail':form.mail.data,
-            'password':form.password.data
+            'contrasena':form.contrasena.data
         }
         response = requests.post("http://127.0.0.1:5000/login",json=post_data)
         
         if response.status_code == 200:
-         
             session['mail'] = response.json()['mail']
-            session['user_id'] = response.json()['id']
+            session['user_id'] = response.json()['userID']
             session['username'] = response.json()['username']
             session['logged_in'] = True
-            
-
             return redirect(url_for('home'))
         else:
-            flash('Login Unsuccessful. Please check mail and password', 'danger')
+            flash('El mail o la contraseña son incorrectos', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 
 @app.route("/logout")
 def logout():
     session.clear()
-    flash('Ha cerrado sesion exitosamente', 'success')
+    flash('¡Fuera del sistema!', 'success')
     return redirect(url_for('home'))
 
 def save_picture(form_picture):
@@ -77,16 +74,12 @@ def save_picture(form_picture):
 
     return picture_fn
 
-
 @app.route("/account", methods=['GET', 'POST'])
 def account():
     if "mail" in session:
         
         form = UpdateAccountForm()
         if form.validate_on_submit():
-
-            if form.picture.data:
-                picture_file = save_picture(form.picture.data)
 
             post_data={
                 'username': form.username.data,
@@ -97,14 +90,12 @@ def account():
             if response.status_code==200:
                 session['mail'] = response.json()['mail']
                 session['username'] = response.json()['username']
-                flash('Your account has been updated!', 'success')
+                flash('¡Tu cuenta se ha actualizado!', 'success')
                 return redirect(url_for('account'))
         elif request.method == 'GET':
             form.username.data = session['username']
             form.mail.data = session['mail']
-        image_file = url_for('static', filename='profile_pics/default.jpg')
-        return render_template('account.html', title='Account',
-                            image_file=image_file, form=form)
+        return render_template('account.html', title='Account', form=form)
     else:
         return redirect(url_for('login'))
 
@@ -114,14 +105,14 @@ def new_event():
         form = EventoForm()
         if form.validate_on_submit():
             post_data = {
-                'Nombre':form.nombre.data,
-                'Siglas':form.siglas.data,
-                'Descripcion':form.descripcion.data,
-                'Duracion':form.duracion.data,
-                'Cupo':form.asistentes.data,
-                'Costo':form.costo.data,
-                'Lugar':form.lugar.data,
-                'Fecha':str(form.fecha.data),
+                'nombre':form.nombre.data,
+                'siglas':form.siglas.data,
+                'descripcion':form.descripcion.data,
+                'duracion':form.duracion.data,
+                'asistentes':form.asistentes.data,
+                'costo':form.costo.data,
+                'lugar':form.lugar.data,
+                'fecha':str(form.fecha.data),
                 'imagen':form.imagen.data,
                 'empleado':session['user_id']
             }
@@ -137,7 +128,6 @@ def new_event():
 def evento(evento_id):
     event = requests.get("http://127.0.0.1:5000/evento/"+str(evento_id))
     return render_template('evento.html', event=event.json())
-    
 
 @app.route('/evento/comprar/<int:evento_id>', methods=['GET', 'POST'])
 def comprar_evento(evento_id):
@@ -150,7 +140,7 @@ def comprar_evento(evento_id):
             }
             response = requests.post("http://127.0.0.1:5000/evento/comprar/"+str(evento_id),json=post_data)
             if response.status_code == 200:
-                flash('¡Se ha realizado la compra!', 'success')
+                flash('¡Has comprado un boleto!', 'success')
                 return redirect(url_for('home'))
         else:
             event = requests.get("http://127.0.0.1:5000/evento/"+str(evento_id))
@@ -179,7 +169,7 @@ def borrar_evento(evento_id):
         }
         response = requests.post("http://127.0.0.1:5000/evento/"+str(evento_id)+"/borrar",json=post_data)
         if response.status_code ==200:
-            flash('¡El evento ha sido eliminado con éxito!', 'success')
+            flash('¡El evento se ha eliminado con éxito!', 'success')
             return redirect(url_for('home'))
     else:
         return redirect(url_for('login'))
