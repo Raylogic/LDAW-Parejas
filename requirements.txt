@@ -36,7 +36,7 @@ more-itertools==8.2.0
 mysql-connector-python==8.0.20
 packaging==20.3
 pluggy==0.13.1
-protobuf==3.12.1
+protobuf==3.18.3
 py==1.8.1
 pycparser==2.20
 PyJWT==1.7.1
